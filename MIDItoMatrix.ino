@@ -50,7 +50,9 @@ void setup() {
   for (uint8_t i = 0; i < 7; i++) pinMode(columnPins[i], INPUT);
   for (uint8_t i = 0; i < 6; i++) pinMode(rowPins[i], INPUT);
 
-  MIDI.begin(MIDI_CHANNEL_OMNI);
+  MIDI.begin(5); // Chose channel 5 for this first keyboard "Antonelli 2381"
+  // have to remember to change this to 6, 7, 8... as I install this on other keyboards
+  // and make stickers!!!
   MIDI.setHandleNoteOn(handleNoteOn);
   MIDI.setHandleNoteOff(handleNoteOff);
   Serial.begin(31250); // MIDI baud rate
@@ -69,7 +71,7 @@ void loop() {
     if (digitalRead(rowPins[row]) == LOW) {
       pinMode(columnPins[col], OUTPUT);
       digitalWrite(columnPins[col], LOW);
-      delayMicroseconds(100);
+      delayMicroseconds(30);
       pinMode(columnPins[col], INPUT);
     }
   }
