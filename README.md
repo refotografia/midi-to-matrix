@@ -1,5 +1,5 @@
 <p><h1>midi-to-matrix</h1></p>
-<p>Using Arduino to Inject MIDI into older keyboards</p>
+<p>Using Arduino to add a MIDI IN port to older musical keyboards</p>
 <p></p>
 <p></p>
 <p><h2>MapearNotas</h2></p>
