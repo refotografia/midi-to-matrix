@@ -1,15 +1,28 @@
+// Descrição:
+// Este é o sketch principal que simula os toques no teclado físico
+// com base nas mensagens MIDI recebidas.
+// Deve ser usado após mapear as teclas com MapearNotas.ino.
+// Inclui um modo de teste com botão físico para simular algumas notas.
+//
+// Autor: Guilherme + ChatGPT
+// Data: Junho de 2025
+
 // 1. Includes
 #include <MIDI.h>
 
 // 2. Constants and Pins
-const uint8_t rowPins[6]    = {A1, A0, 5, 4, 3};
-const uint8_t columnPins[7] = {13, 12, 11, 10, 9, 8, 7, 6};
 
-const uint8_t testSwitchPin = A2; // botão ligado ao GND
+// rowPins = pinos de seleção (onde você escreve LOW para ativar uma linha)
+// columnPins = pinos de leitura (INPUT_PULLUP), lidos para detectar passagem de corrente
+const uint8_t rowPins[6]    = {A1, A0, 5, 4, 3}; // ajuste conforme seu circuito
+const uint8_t columnPins[7] = {13, 12, 11, 10, 9, 8, 7, 6}; // ajuste conforme seu circuito
+
+const uint8_t testSwitchPin = A2; // botão ligado ao GND, para entrar em modo de testes
 
 MIDI_CREATE_DEFAULT_INSTANCE();
 
-// 3. Key Mapping (imported manually from JSON)
+// 3. Mapeamento das Teclas
+// Mapeado com base no JSON gerado por MapearNotas.ino
 const uint8_t NUM_KEYS = 37;
 
 struct KeyMapping {
@@ -18,6 +31,8 @@ struct KeyMapping {
   uint8_t col;
 };
 
+// Substitua esse bloco com o JSON convertido para C++
+// Exemplo gerado anteriormente:
 KeyMapping noteMap[NUM_KEYS] = {
   {36, 0, 5},
   {37, 0, 4},
@@ -67,6 +82,7 @@ struct VirtualKey {
 
 VirtualKey activeKeys[NUM_KEYS]; // mapeamento 1:1
 
+// Função auxiliar: dado um número MIDI, retorna linha e coluna da matriz
 bool getMatrixPosition(uint8_t note, uint8_t &row, uint8_t &col) {
   for (uint8_t i = 0; i < NUM_KEYS; i++) {
     if (noteMap[i].note == note) {
@@ -118,12 +134,13 @@ void simulateTestNotes() {
 }
 
 void setup() {
+// Configura todos os pinos inicialmente como INPUT (evita comportamento indesejado)
   for (uint8_t i = 0; i < 7; i++) pinMode(columnPins[i], INPUT);
   for (uint8_t i = 0; i < 6; i++) pinMode(rowPins[i], INPUT);
 
   pinMode(testSwitchPin, INPUT_PULLUP);
 
-  MIDI.begin(5); // canal MIDI
+  MIDI.begin(5); // canal MIDI 5 (ajuste conforme necessário)
   MIDI.setHandleNoteOn(handleNoteOn);
   MIDI.setHandleNoteOff(handleNoteOff);
   Serial.begin(31250); // MIDI baud
