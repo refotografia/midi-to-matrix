@@ -1,8 +1,8 @@
-const int matrixPins[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, A0, A1};
+const int matrixPins[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, A0, A1}; // insira aqui todos os pinos que pretende usar no Arduino
 const int numPins = sizeof(matrixPins) / sizeof(matrixPins[0]);
 
-const int totalKeys = 37;
-int currentNote = 36;
+const int totalKeys = 37; // insira aqui o número de teclas do seu teclado
+int currentNote = 36; // insira aqui a nota mais grave do seu teclado
 
 struct Key {
   int pinLow;
@@ -54,7 +54,7 @@ void loop() {
         if (digitalRead(matrixPins[j]) == LOW) {
           // encontrou combinação de pinos
           recordedKeys[keyCount] = {matrixPins[i], matrixPins[j], currentNote};
-          Serial.print("Tecla detectada entre pinos ");
+          Serial.print("Tecla detectada entre pinos "); // em geral, na medida em que as teclas vão sendo detectadas, já fica óbvio como é a matriz
           Serial.print(matrixPins[i]);
           Serial.print(" e ");
           Serial.println(matrixPins[j]);
