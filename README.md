@@ -1,4 +1,6 @@
-# Using Arduino to add a MIDI IN port to older musical keyboards.
+# Arduino to add a MIDI IN port to older musical keyboards
+![arduino](https://github.com/user-attachments/assets/55448113-d496-4816-8cad-27ca0f10c2d4)
+
 
 Mostly done with help from chatGPT, remember ChatGPT can make mistakes. Check important info.
 
@@ -44,3 +46,5 @@ Description:
 
     A test mode is supported: connect a button to a chosen pin to simulate some notes locally.
     This helps verify that the circuit is responding correctly, even without MIDI input.
+
+![arduino](https://github.com/user-attachments/assets/55448113-d496-4816-8cad-27ca0f10c2d4)
