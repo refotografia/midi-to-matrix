@@ -24,6 +24,7 @@ MIDI_CREATE_DEFAULT_INSTANCE();
 // 3. Mapeamento das Teclas
 // Mapeado com base no JSON gerado por MapearNotas.ino
 const uint8_t NUM_KEYS = 37;
+const uint8_t OFFSET = 36; // Nota MIDI mais grave do seu teclado (ex: C2)
 
 struct KeyMapping {
   uint8_t note;
@@ -98,14 +99,14 @@ bool getMatrixPosition(uint8_t note, uint8_t &row, uint8_t &col) {
 void handleNoteOn(byte channel, byte pitch, byte velocity) {
   uint8_t row, col;
   if (getMatrixPosition(pitch, row, col)) {
-    activeKeys[pitch - 36] = {true, row, col};  // offset de base 36
+    activeKeys[pitch - OFFSET] = {true, row, col};  // offset de base 36
   }
 }
 
 void handleNoteOff(byte channel, byte pitch, byte velocity) {
   uint8_t row, col;
   if (getMatrixPosition(pitch, row, col)) {
-    activeKeys[pitch - 36].active = false;
+    activeKeys[pitch - OFFSET].active = false;
   }
 }
 
@@ -122,13 +123,9 @@ void simulateTestNotes() {
     digitalWrite(toggle ? HIGH : LOW);
 
     if (toggle) {
-      handleNoteOn(1, 36, 100);
-      handleNoteOn(1, 40, 100);
-      handleNoteOn(1, 70, 100);
+      handleNoteOn(5, 40, 100); // canal MIDI 5 (ajuste conforme necessário)
     } else {
-      handleNoteOff(1, 36, 0);
-      handleNoteOff(1, 40, 0);
-      handleNoteOff(1, 70, 0);
+      handleNoteOff(5, 40, 0); // canal MIDI 5 (ajuste conforme necessário)
     }
   }
 }
